@@ -6,9 +6,10 @@ Setting up the application on your laptop is as easy as abc. Steps are as follow
 1. Install `python3` using any of the standard method on your computer.
 2. Install `django 1.10.1` or later. (Application is compatible with older versions as well but newer are recommended)
 3. Enter the project parent directory (where you can find manage.py)
-4. Run `python3 manage.py migrate`
-5. python `python3 manage.py createsuperuser`
-6. Run `python3 manage.py runserver`
+4. Create a database in mysql named ```tmpDB```
+5. Run `python3 manage.py migrate`
+6. python `python3 manage.py createsuperuser`
+7. Run `python3 manage.py runserver`
 
 ## Using application prototype?
 Visit `localhost:8000/admin` and login using the superuser credentials you created above. 
@@ -44,7 +45,7 @@ To start using the application:
 
 ## Load/Store data from the database
 
- Store: ```python3 manage.py dumpdata > db.json```
+ Store: ```python3 manage.py dumpdata > db.json``` ; 
  Load: ```python3 manage.py loaddata db.json```
 
 
