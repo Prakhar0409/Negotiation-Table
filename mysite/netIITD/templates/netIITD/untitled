@@ -1,0 +1,123 @@
+
+{% include "netIITD/base.html" %}
+
+<body>
+<h2>Companies Status</h2>
+{% if companies %}
+	<table class="table table-striped">
+		<thead class="thead-inverse">
+			<tr class="bg-primary">
+				<th>Companyname</th>
+				<th>IndustryType</th>
+				{% for m in materials %}
+				<th>{{ m.material_name }}</th>
+				{% endfor %}
+				<th>Produtionunits</th>
+				<th>Money</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for c in companies %}
+		<tr>
+			{% comment %}
+			{% for a in c._meta.get_fields() %}
+			<td>{{ getattr(c,a,None) }}</td>
+			{% endfor %}
+			{% endcomment %}
+			
+			<td>{{ c.com_name }}</td>
+			<td>{{ c.com_type }}</td>
+			{% for cm in commats %}
+			{% if c.id == cm.com.id %}
+			<td>{{ cm.amt }}</td>
+			{% endif %}
+			{% endfor %}
+			<td>{{ c.prod_units }}</td>
+			<td>{{ c.com_money }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+	</table>
+
+	{% comment %}
+	<h2>Company and potential suppliers</h2>	
+	<table>
+		<tr>
+			<th>Company name</th>
+			<th>C1</th>
+			<th>C2</th>
+			<th>C3</th>
+		</tr>
+		{% for c in companies %}
+		<tr>	
+			<td>{{ c.com_name }}</td>
+			{% for cx in c.c_1.all %}
+			<td>{{ cx.com_2 }}</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</table>
+	{% endcomment %}
+
+{% else %}
+	<p>No companies have been added yet!</p>
+{% endif %}
+
+<br/><hr/>
+
+<h2>Banks</h2>
+<table class="table table-striped">
+	<thead class="thead-inverse">
+		<tr class="bg-info">
+		<th>Bank Name</th>
+		<th>Money</th>
+		<th>Veto Percent</th>
+	</tr>
+</thead>
+<tbody>
+	{% for b in banks %}
+	<tr>
+		<td>{{ b.bank_name }}</td>
+		<td>{{ b.bank_money }}</td>
+		<td>{{ b.veto }}</td>
+	</tr>
+	{% endfor %}
+</tbody>
+</table>
+
+<br/><hr/>
+<h2>Nations</h2>
+<table class="table table-striped">
+	<thead class="thead-inverse">
+		<tr class="bg-danger">
+		<th>Name</th>
+		<th>Money</th>
+		<th>Production Houses</th>
+		{% for b in banks %}
+		<th>{{ b.bank_name }}</th>
+		{% endfor %}
+	</tr>
+	</thead>
+	<tbody>
+	{% for n in nations %}
+	<tr>
+		<td>{{ n.nation_name }}</td>
+		<td>{{ n.nation_money }}</td>
+		<td>{{ n.prod_units }}</td>
+		{% for idx in bankNo %}
+			{% for bn in banknations %}
+				{% if bn.nation.id == n.id and bn.bank.id == idx %}
+				<td>{{ bn.veto_part }}</td>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+
+	</tr>
+</tbody>
+	{% endfor %}
+</table>
+
+
+
+</body>
+</html>

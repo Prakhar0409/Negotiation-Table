@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 
+from django.http import StreamingHttpResponse
+from django.views.static import serve
+
 import subprocess
 import os
 import math
@@ -17,10 +20,10 @@ def index(request):
 	return HttpResponse("Add data throguh admin page and then call visit /net/relate to populate the related db")
 
 def Relate(request):
-	companies = Company.objects.all()
-	nations = Nation.objects.all()
-	banks = Bank.objects.all()
-	materials = Material.objects.all()
+	companies = Company.objects.all().order_by("pk")
+	nations = Nation.objects.all().order_by("pk")
+	banks = Bank.objects.all().order_by("pk")
+	materials = Material.objects.all().order_by("pk")
 	for n in nations:
 		for b in banks:
 			bn = BankNation(nation=n,bank=b,veto_part=0)
@@ -32,14 +35,17 @@ def Relate(request):
 			cm.save()
 	return HttpResponse("Hello Wrold")
 
+def tp(request):
+	context={}
+	return render(request,'netIITD/tp.html',context)
 
 def showall(request):
-	companies = Company.objects.all()
-	commats = ComMat.objects.all()			# to represent amt of material each company has
-	nations = Nation.objects.all()
-	banks = Bank.objects.all()
-	materials = Material.objects.all()
-	banknations = BankNation.objects.all()		# to represent veto power of each bank a nation has
+	companies = Company.objects.all().order_by("pk")
+	commats = ComMat.objects.all().order_by("com_id","mat_id")			# to represent amt of material each company has
+	nations = Nation.objects.all().order_by("pk")
+	banks = Bank.objects.all().order_by("pk")
+	materials = Material.objects.all().order_by("pk")
+	banknations = BankNation.objects.all().order_by("nation_id","bank_id")	# to represent veto power of each bank a nation has
 	template = loader.get_template('netIITD/index.html')
 	context = { 'companies':companies, 'nations':nations,'banks':banks, 'materials':materials,'banknations':banknations,'bankNo':range(1,len(banks)+1), 'commats':commats}
 	return render(request,'netIITD/index.html',context)
@@ -193,22 +199,32 @@ def RetGov(request):
 	coms = Company.objects.all()
 	for c in coms:
 		mat = c.com_type
-		matq = getattr(c,"mat"+str(mat.id))
-		c.com_money = c.com_money + matq * mat.base_price
-		setattr(c,"mat"+str(mat.id),0)
+		matq = ComMat.objects.get(com=c,mat=mat)
+		c.com_money = c.com_money + matq.amt * mat.base_price
+		matq.amt=0
 		c.save()
+		matq.save()
 	return redirect('/net/showall')
 
+#@csrf_exempt
 def SaveData(request):
 	dbname = request.POST['dbname']
 	dbname = "save_"+dbname
 	cmd = "./backup.sh "+dbname
 	os.system(cmd)
 	di = os.getcwd()
-	return redirect('/net/showall')
+	f = open("../"+dbname)
+	outp = f.read()
+	f.close()
+
+	return serve(request, os.path.basename(dbname), os.path.dirname(dbname))
+	#response = StreamingHttpResponse(outp)
+	#response['Content-Type'] = 'text/plain; charset=utf8'
+	#return response
 
 def Restart(request):
 	companies = Company.objects.all()
+	return HttpResponse("Hey buddy")
 
 
 def Reset(request):

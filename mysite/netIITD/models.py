@@ -23,7 +23,7 @@ class ComMat(models.Model):
 	amt = models.FloatField(default=0)
 
 	def __str__(self):
-		return (com.com_name+" -> "+mat.material_name)
+		return (self.com.com_name + " -> " + self.mat.material_name)
 
 class Nation(models.Model):
 	nation_name = models.CharField(max_length=50)

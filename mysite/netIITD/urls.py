@@ -5,6 +5,7 @@ app_name='netIITD'
 urlpatterns = [
 	url(r'^$',views.index),	
 	url(r'showall',views.showall),
+	url(r'tp',views.tp),
 	url(r'comtrans',views.addComTrans,name='comtrans'),
 	url(r'prodreq',views.addProdReq,name='prodreq'),
 	url(r'prodhpur',views.purProdHouse,name='prodhpur'),

@@ -1,20 +1,40 @@
 
 {% include "netIITD/base.html" %}
-
+<style>
+body{
+	font-family:"Comic Sans MS","sans-serif";
+}
+div div{
+	margin-right:5%;
+}
+body > div{
+	background-color:#ddf;
+}
+h1,h2,h3{
+	text-align:center;
+}
+h2{
+	text-decoration:underline;
+}
+</style>
 <body>
+<h1>Negotiation Table, IIT Delhi 2016</h1>
+
 <h2>Companies Status</h2>
 {% if companies %}
-	<table>
-		<tr>
-			<th>Companyname</th>
-			<th>IndustryType</th>
-			{% for m in materials %}
-			<th>{{ m.material_name }}</th>
-			{% endfor %}
-			<th>Produtionunits</th>
-			<th>Money</th>
-		</tr>
-
+	<table class="table table-striped">
+		<thead class="thead-inverse">
+			<tr class="bg-primary">
+				<th>Companyname</th>
+				<th>IndustryType</th>
+				{% for m in materials %}
+				<th>{{ m.material_name }}</th>
+				{% endfor %}
+				<th>Produtionunits</th>
+				<th>Money</th>
+			</tr>
+		</thead>
+		<tbody>
 		{% for c in companies %}
 		<tr>
 			{% comment %}
@@ -34,6 +54,7 @@
 			<td>{{ c.com_money }}</td>
 		</tr>
 		{% endfor %}
+	</tbody>
 	</table>
 
 	{% comment %}
@@ -67,7 +88,7 @@
 <div>
 <form action="{% url 'netIITD:comtrans' %}" method="post">
 	{% csrf_token %}
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left;">
 		From Company:<br/>
 		<select name="c1">
 		{% for c in companies %}
@@ -75,7 +96,7 @@
 		{% endfor %}
 		</select>
 	</div>
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left; ">
 		To Company:<br/>
 		<select name="c2">
 		{% for c in companies %}
@@ -84,14 +105,14 @@
 		</select>
 	</div>
 	{% comment %}
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left;">
 		From Company:<br/>
 		{% for c in companies %}
 		<input type='radio' name='c1' id='c{{ forloop.counter }}' value="{{ c.id }}"/>
 		<label for="com{{ forloop.counter }}">{{ c.com_name }} </label><br/>
 		{% endfor %}
 	</div>
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left; ">
 		To Company: <br/>
 		{% for c in companies %}
 		<input type='radio' name='c2' id='c{{ forloop.counter }}' value="{{ c.id }}"/>
@@ -113,18 +134,19 @@
 	<div style='float:left;'>
 		Units <br/><input type="number" name="units" value="0"><br/>
 	</div>
+	<br/>
 	<input type='submit' value='Add Transaction'>
 </form>
 </div>
 
-<br/>
+
 <hr/>
 <h3>Production Request:</h3>
 
 <div>
 <form action="{% url 'netIITD:prodreq' %}" method="post">
 	{% csrf_token %}
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left; ">
 		From Company:<br/>
 		<select name="com">
 		{% for c in companies %}
@@ -152,6 +174,7 @@
 	<div style='float:left;'>
 		Quantity:<br/> <input type="number" name="quantity" value="0"><br>
 	</div>
+	<br/>
 	<input type='submit' value='Add Production Request'>
 </form>
 </div>
@@ -159,12 +182,15 @@
 <br/>
 <hr/>
 <h2>Banks</h2>
-<table>
-	<tr>
+<table class="table table-striped">
+	<thead class="thead-inverse">
+		<tr class="bg-info">
 		<th>Bank Name</th>
 		<th>Money</th>
 		<th>Veto Percent</th>
 	</tr>
+</thead>
+<tbody>
 	{% for b in banks %}
 	<tr>
 		<td>{{ b.bank_name }}</td>
@@ -172,6 +198,7 @@
 		<td>{{ b.veto }}</td>
 	</tr>
 	{% endfor %}
+</tbody>
 </table>
 
 <h3>Purchase bank shares(veto percent):</h3>
@@ -179,7 +206,7 @@
 <div>
 <form action="{% url 'netIITD:purbankveto' %}" method="post">
 	{% csrf_token %}
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left;">
 		From Bank:<br/>
 		<select name="bank">
 		{% for b in banks %}
@@ -202,16 +229,17 @@
 	<div style='float:left;'>
 		Deal Price:<br/> <input type="number" name="price" value="0"><br>
 	</div>
+	<br/>
 	<input type='submit' value='Buy Bank Veto'>
 </form>
 </div>
-<br/>
+<hr/>
 <h3>Bank Loans:</h3>
 
 <div>
 <form action="{% url 'netIITD:bankloan' %}" method="post">
 	{% csrf_token %}
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left;">
 		From Bank:<br/>
 		<select name="bank">
 		{% for b in banks %}
@@ -234,14 +262,16 @@
 	<div style='float:left;'>
 		Interest:<br/> <input type="number" name="interest" value="0"><br>
 	</div>
+	<br/>
 	<input type='submit' value='Give Loan'>
 </form>
 </div>
 <br/>
 <hr/>
 <h2>Nations</h2>
-<table>
-	<tr>
+<table class="table table-striped">
+	<thead class="thead-inverse">
+		<tr class="bg-danger">
 		<th>Name</th>
 		<th>Money</th>
 		<th>Production Houses</th>
@@ -249,6 +279,8 @@
 		<th>{{ b.bank_name }}</th>
 		{% endfor %}
 	</tr>
+	</thead>
+	<tbody>
 	{% for n in nations %}
 	<tr>
 		<td>{{ n.nation_name }}</td>
@@ -263,6 +295,7 @@
 		{% endfor %}
 
 	</tr>
+</tbody>
 	{% endfor %}
 </table>
 <br/>
@@ -271,7 +304,7 @@
 <div>
 <form action="{% url 'netIITD:prodhpur' %}" method="post">
 	{% csrf_token %}
-	<div style="float:left; border:2px solid red;">
+	<div style="float:left;">
 		From Nation:<br/>
 		<select name="nat">
 		{% for n in nations %}
@@ -294,6 +327,7 @@
 	<div style='float:left;'>
 		Price per Prod house:<br/> <input type="number" name="ppph" value="0"><br>
 	</div>
+	<br/>
 	<input type='submit' value='Buy Prod House'>
 </form>
 </div>
