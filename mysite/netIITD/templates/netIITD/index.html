@@ -57,25 +57,28 @@ h2{
 	</tbody>
 	</table>
 
-	{% comment %}
-	<h2>Company and potential suppliers</h2>	
-	<table>
-		<tr>
-			<th>Company name</th>
-			<th>C1</th>
-			<th>C2</th>
-			<th>C3</th>
+	
+	<h2>Industry type vs Raw materials</h2>	
+	<table class="table table-striped">
+		<thead class="thead-inverse">
+			<tr class="bg-info">
+			<th>Industry type</th>
+			<th>Raw1</th>
+			<th>Raw2</th>
+			<th>Raw3</th>
 		</tr>
-		{% for c in companies %}
+	</thead>
+	<tbody>
+		{% for m in mx %}
 		<tr>	
-			<td>{{ c.com_name }}</td>
-			{% for cx in c.c_1.all %}
-			<td>{{ cx.com_2 }}</td>
+			{% for m1 in m %}
+			<td>{{ m1.material_name }}</td>
 			{% endfor %}
 		</tr>
 		{% endfor %}
+	</tbody>
 	</table>
-	{% endcomment %}
+	
 
 {% else %}
 	<p>No companies have been added yet!</p>
@@ -184,7 +187,7 @@ h2{
 <h2>Banks</h2>
 <table class="table table-striped">
 	<thead class="thead-inverse">
-		<tr class="bg-info">
+		<tr class="bg-primary">
 		<th>Bank Name</th>
 		<th>Money</th>
 		<th>Veto Percent</th>
@@ -271,7 +274,7 @@ h2{
 <h2>Nations</h2>
 <table class="table table-striped">
 	<thead class="thead-inverse">
-		<tr class="bg-danger">
+		<tr class="bg-primary">
 		<th>Name</th>
 		<th>Money</th>
 		<th>Production Houses</th>
@@ -342,7 +345,9 @@ h2{
 <form action="{% url 'netIITD:retgov' %}" method="post">
 	{% csrf_token %}
 	    <input type="submit" value="Return to Gov (Companies sell their identity product to Gov at base price)" />
-</form>
+    </form>
+
+    {% comment %}
 <form action="{% url 'netIITD:savedata' %}" method="post">
 	{% csrf_token %}
 	DB File name (db1.json,db2.json etc recommended)
@@ -353,5 +358,6 @@ h2{
 	{% csrf_token %}
 	    <input type="submit" value="Reset Game" />
 </form>
+    {% endcomment %}
 </body>
 </html>
