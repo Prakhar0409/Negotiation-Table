@@ -40,7 +40,9 @@ To start using the application:
 3. go to `serverip:8000/net/relate`
 4. go to `serverip:8000/net/showall`
 5. Here onwards ame is very intuitive
-6. Reset resets the overall game and you should then start again from step 1. (creating super user again)
+6. go to `serverip:8000/net/reset` to reset everything back to intial values.
+
+Note: The urls may be different with a prefix added after `serverip:portno` if a production server is configured in such a way.
 
 
 ## Load/Store data from the database
