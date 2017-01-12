@@ -19,7 +19,7 @@ Following tables stand for the following things in the application.
 2. Company : Entries for companies
 3. Nation : Entries for Countries
 4. Bank : Entry for banks
-..* You can actually stop after populating these and continue onto the next step (or may read the following to understand the terminology)
+  * You can actually stop after populating these and continue onto the next step (or may read the following to understand the terminology)
 5. Bank nations : Represent relation between each bank with each country (for example how much veto power each country has in each bank etc)
 6. Com banks : (not being used in current state of application) Represent relation between Companies and banks - Was a fallback  
 7. Com mat : represent relation between Company and Materials. So as to which company owns how much of which material and stuff
@@ -33,7 +33,7 @@ Following tables stand for the following things in the application.
 
 To start using the application:
 1. Create a super user
-..1. To set subsidy, factor of production and capacity of each production house: Goto mysite/netIITD/views.py. Search for the quantities and change the values in front to set those.
+  1. To set subsidy, factor of production and capacity of each production house: Goto mysite/netIITD/views.py. Search for the quantities and change the values in front to set those.
 2. Login to admin panel and add materials, banks, nations, comapnies
 3. go to `serverip:8000/net/relate`
 4. go to `serverip:8000/net/showall`
