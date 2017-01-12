@@ -34,7 +34,7 @@ Following tables stand for the following things in the application.
 To start using the application:
 1. Create a super user
   1. To set subsidy, factor of production and capacity of each production house: Goto mysite/netIITD/views.py. Search for the quantities and change the values in front to set those.
-2. Login to admin panel and add materials, banks, nations, comapnies
+1. Login to admin panel and add materials, banks, nations, comapnies
 3. go to `serverip:8000/net/relate`
 4. go to `serverip:8000/net/showall`
 5. Here onwards ame is very intuitive
